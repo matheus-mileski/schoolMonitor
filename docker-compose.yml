@@ -1,0 +1,63 @@
+version: "3.9"
+
+services:
+   api:
+    container_name: monitor-api
+    build: ./docker/django
+    command: sh /entrypoint.sh
+    env_file:
+      - .env
+    restart: unless-stopped
+    volumes:
+      - ./api:/api
+      - ./data:/data
+    ports:
+      - "8080:8000"
+      - "9990:9999"
+    networks:
+      - default
+    depends_on:
+      - db
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1M"
+        max-file: "10"
+
+   db:
+    image: postgis/postgis:12-3.0
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - ./data/pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1M"
+        max-file: "10"
+
+   redis:
+    image: redis
+    restart: unless-stopped
+
+   celery_worker:
+    build: ./docker/django
+    restart: unless-stopped
+    command: celery -A schoolMonitor worker -l info
+    env_file:
+      - .env
+    volumes:
+      - ./api:/api
+      - ./data/media:/data/media
+    depends_on:
+      - api
+      - redis
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1M"
+        max-file: "10"
+
