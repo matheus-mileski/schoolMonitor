@@ -95,3 +95,4 @@ wincertstore==0.2
 wrapt==1.12.1
 xarray==0.16.1
 zipp==3.4.0
+paho-mqtt==1.5.1

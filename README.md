@@ -10,5 +10,3 @@ docker-compose exec api python manage.py migrate
 ```
 
 Open http://localhost:8080/
-
-
