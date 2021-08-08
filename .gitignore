@@ -2,8 +2,6 @@
 
 data/
 
-.env
-
 api/.bash_history
 
 .DS_Store
