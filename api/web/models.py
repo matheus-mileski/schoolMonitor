@@ -34,10 +34,8 @@ class Bme280(BaseModel):
 class Ccs811(BaseModel):
     co2 = models.IntegerField(
         blank=False,
-        max_digits=5,
     )
 
     tvoc = models.IntegerField(
         blank=False,
-        max_digits=5,
     )
