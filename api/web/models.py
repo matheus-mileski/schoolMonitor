@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class BaseModel(models.Model):
     created_at = models.DateTimeField(
         auto_now_add=True,
@@ -12,30 +13,58 @@ class BaseModel(models.Model):
     class Meta:
         abstract = True
 
-class Bme280(BaseModel):
-    temperature = models.DecimalField(
+
+class Temperature(BaseModel):
+    value = models.DecimalField(
         blank=False,
         decimal_places=2,
         max_digits=5,
     )
 
-    umidity = models.DecimalField(
+    topic = models.TextField(
+        blank=False,
+    )
+
+
+class Humidity(BaseModel):
+    value = models.DecimalField(
         blank=False,
         decimal_places=2,
         max_digits=6,
     )
 
-    pressure = models.DecimalField(
+    topic = models.TextField(
+        blank=False,
+    )
+
+
+class Pressure(BaseModel):
+    value = models.DecimalField(
         blank=False,
         decimal_places=2,
         max_digits=6,
     )
 
-class Ccs811(BaseModel):
-    co2 = models.IntegerField(
+    topic = models.TextField(
         blank=False,
     )
 
-    tvoc = models.IntegerField(
+
+class Co2(BaseModel):
+    value = models.IntegerField(
+        blank=False,
+    )
+
+    topic = models.TextField(
+        blank=False,
+    )
+
+
+class Tvoc(BaseModel):
+    value = models.IntegerField(
+        blank=False,
+    )
+
+    topic = models.TextField(
         blank=False,
     )
